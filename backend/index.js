@@ -30,6 +30,31 @@ app.post("/createUser", async (req, res) => {
   res.json(user)
 });*/
 
+app.post("/setPreferences", (req, res) => {
+  console.log("req.body" + req.body);
+  var _id = req.body._id;
+
+  var currentUser = {
+    name: req.body.name,
+    username: req.body.username,
+    roomies: req.body.roomies,
+    preferences: req.body.preferences,
+  };
+
+  UserModel.findByIdAndUpdate(_id, currentUser, { new: true }, function(
+    err,
+    currentUser
+    ) {
+    if (err) {
+      console.log("err", err);
+      res.status(500).send(err);
+    } else {
+      console.log("success");
+      res.send(currentUser);
+      }
+    });
+});
+
 app.get("/getUsers", (req, res) => {
     UserModel.find({}, (err, result) => {
         if(err){
@@ -43,10 +68,6 @@ app.get("/getUsers", (req, res) => {
 });
 
 /*app.get("/getRoomies", (req, res) => {
-
-});*/
-
-/*app.post("/updatePreferences", (req, res) => {
 
 });*/
 
