@@ -4,3 +4,6 @@ to run:
 
 - open second terminal
 - cd backend -> npm start
+
+clearing server:
+- pkill -f node
