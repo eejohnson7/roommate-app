@@ -1,3 +1,5 @@
+//functionality complete, could be re-formatted to look nicer if time permits
+
 import Axios from "axios";
 import { useState, useEffect } from 'react';
 
