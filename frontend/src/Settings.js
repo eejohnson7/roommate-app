@@ -23,6 +23,7 @@ function Settings() {
     
     var currentUser = {  "_id": "624cce80ce757e25629f9879",  "name": "Erin",  "username": "eejohnson",  "roomies": [],  "matches": [    "Pedro"  ],  "preferences": [    "hobbies",    "games"  ]};
     
+    /*needs to populate only currentUser's current roommates instead of all users*/
     useEffect(() => {
         Axios.get("http://localhost:3001/getUsers").then((response) => {
             setListOfRoomies(response.data);
@@ -30,7 +31,7 @@ function Settings() {
     }, []);
 
     const removeRoomie = () => {
-    /*    Axios.post("http://localhost:3001/removeRoomie", {
+        /*Axios.post("http://localhost:3001/removeRoomie", {
             _id,
             name,
             username,
