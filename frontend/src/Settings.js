@@ -10,7 +10,7 @@ import girl from './media/girl.png';
 
 import './Preferences';
 import './RoommateFinder';
-import './ChoreList';
+// import './Chores/ChoreList';
 
 function Settings() {
     const [listOfRoomies, setListOfRoomies] = useState([]);
