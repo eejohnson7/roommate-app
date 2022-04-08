@@ -54,7 +54,7 @@ app.post("/addRoomie", (req, res) => {
     });
 });
 
-app.post("/removeRoomie", (req, res) => {
+app.post("/setPreferences", (req, res) => {
 
 })
 

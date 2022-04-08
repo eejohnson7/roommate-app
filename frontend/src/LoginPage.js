@@ -4,6 +4,7 @@ import pic from './media/roommates.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './newStyle.css'
 import axios from "axios"
+var currentUser;
 
 class LoginPage extends Component {
 
@@ -13,7 +14,6 @@ class LoginPage extends Component {
             username: '',
             password: '' 
         }
-
         this.checkUsername = this.checkUsername.bind(this)
         this.checkPassword = this.checkPassword.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -40,13 +40,16 @@ class LoginPage extends Component {
         }
     
         axios.post('http://localhost:3001/app/login', login)
-          .then((response) => { 
+          .then((user) => { 
+            currentUser = user.data.firstName
             window.location = '/Chores'
+            alert("The current user is " + currentUser)
           })
           .catch((err) => {
             alert('Invalid username or password')
         })
       }
+
 
     render() {
         return (

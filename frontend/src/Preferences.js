@@ -42,18 +42,26 @@ function Preferences () {
       preferences
     }).then((response) => {
       alert("PREFERENCES UPDATED"); 
-    }); 
-  }
+      window.location = '/RoommateFinder'
+    })
+    .catch((err) => {
+      alert('Answer all questions')
+    })
+
+}
+
+  function onSubmit(event) {
+
+    }
 
   return(
     <div className="Preferences" style={{backgroundColor:'#F26666'}} >
       <img src={logo} alt="logo" height="75"></img>
       <p></p>
 
-      <div>
+      <div style={{ fontSize: "25px", color: "#F2EFE4"}}>
         <h4 className="fw-bold text-center mt-3"> </h4>
-
-        <form style={{color:"#F2C4C4"}}>
+        <form style={{color:"#F2EFE4"}}>
           <p className="fw-bold">Are you looking to rent a house?</p>
 
           <div className="form-check mb-2">
@@ -70,7 +78,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Are you looking to rent an apartment?</p>
 
           <div className="form-check mb-2">
@@ -87,7 +95,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Are you okay with pets?</p>
 
           <div className="form-check mb-2">
@@ -104,7 +112,7 @@ function Preferences () {
           </div>
         </form>
   
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Do you drink?</p>
 
           <div className="form-check mb-2">
@@ -121,7 +129,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Do you smoke?</p>
 
           <div className="form-check mb-2">
@@ -138,7 +146,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Are you okay with having people over?</p>
 
           <div className="form-check mb-2">
@@ -155,7 +163,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Are you a morning person?</p>
 
           <div className="form-check mb-2">
@@ -172,7 +180,7 @@ function Preferences () {
           </div>
         </form>
 
-        <form style={{color:"#F2C4C4"}}>
+        <form >
           <p className="fw-bold">Are you a night owl?</p>
 
           <div className="form-check mb-2">
@@ -198,7 +206,6 @@ function Preferences () {
       <div>
         <Button style={{borderRadius: '12px', position: 'absolute', right: 5, top: 5}} variant="danger" onClick={(e2) => {
           e2.preventDefault();
-          window.location.href='/ChoreList';
         }}>Open Chore List</Button>
       </div>
 

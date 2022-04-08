@@ -3,10 +3,12 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { json } = require('express')
+
 
 
 router.post('/signup', (req, res)=> {
-    var { firstName, lastName, username, password }=req.body
+    var { firstName, lastName, username, password } = req.body
     console.log(req.body)
     if( !firstName || !lastName || !username || !password )
     {
@@ -28,7 +30,7 @@ router.post('/signup', (req, res)=> {
          user.save()
          .then((user)=>{
              res.json({message:"Saved Successfully"})
-             console.log(user.email)
+             console.log(user.username)
          })
          .catch((err)=>{
              console.log(err)
@@ -43,6 +45,7 @@ router.post('/signup', (req, res)=> {
     console.log(err)
     })
 })
+
 
 const auth = router.post('/login', (req, res) => {
     var { username, password } = req.body
@@ -59,9 +62,13 @@ const auth = router.post('/login', (req, res) => {
         .then(match => {
             if (match)
             {
-                const token = jwt.sign({ _id: savedUser._id }, 'JWT_SECRET')
-                res.json({ token: token })
-                window.location = '/ChoreList';
+                res.json({ 
+                    firstName: savedUser.firstName,
+                    lastName: savedUser.lastName,
+                    username: savedUser.username,
+                    roomies: savedUser.roomies,
+                    preferences: savedUser.preferences 
+                })
             }
             else{
                 return res.status(422).json({error:"Invalid username or password"})
@@ -73,5 +80,17 @@ const auth = router.post('/login', (req, res) => {
     })
 })
 
+router.get('getInfo', auth, (req, res) => {
+    var { firstName, lastName, username, password} = req.body
+    if(auth) {
+        User.findOne({ username: username})
+            .then((user) => {
+                console.log(user.firstName)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+})
 
 module.exports = router
