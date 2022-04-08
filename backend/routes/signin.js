@@ -2,9 +2,6 @@ const User = require('../models/Users')
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { json } = require('express')
-
 
 
 router.post('/signup', (req, res)=> {

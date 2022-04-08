@@ -4,7 +4,7 @@ import pic from './media/roommates.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './newStyle.css'
 import axios from "axios"
-var currentUser;
+var currentUser
 
 class LoginPage extends Component {
 
@@ -33,7 +33,7 @@ class LoginPage extends Component {
 
     onSubmit(event) {
         event.preventDefault()
-    
+
         const login = {
           username: this.state.username,
           password: this.state.password

@@ -26,17 +26,8 @@ const UserSchema = new mongoose.Schema({
 
     preferences: {
         type: Array,
-    },
-
-    signOut: {
-        type: Boolean,
-        default: false
-    },
-
-    login: {
-        type: Boolean,
-        default: false
-    },
+        required: true
+    }
 });
 
 const User = mongoose.model('users', UserSchema)

@@ -1,46 +1,47 @@
 import { useState, useEffect } from 'react';
 import Axios from "axios";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card, CardGroup } from 'react-bootstrap';
 import './UserCard.css';
-
 import logo from './media/Roomie.png';
 import girl from './media/girl.png';
-
 import './Preferences';
 import './RoommateFinder';
-// import './Chores/ChoreList';
+
 
 function Settings() {
-    const [listOfRoomies, setListOfRoomies] = useState([]);
-    const[_id, set_id] = useState("");
-    const[name, setName] = useState("");
-    const[username, setUsername] = useState("");
-    const[exRoomie, setExRoomie] = useState([]);
-    const[preferences, setPreferences] = useState([]);
-    const[currRoomies, setCurrRoomies] = useState([]);
+    const [listOfUsers, setListOfUsers] = useState([]);
+    const [_id, set_id] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [exRoomie, setExRoomie] = useState([]);
+    const [preferences, setPreferences] = useState([]);
+    const [currRoomies, setCurrRoomies] = useState([]);
     
-    var currentUser = {  "_id": "624cce80ce757e25629f9879",  "name": "Erin",  "username": "eejohnson",  "roomies": [],  "matches": [    "Pedro"  ],  "preferences": [    "hobbies",    "games"  ]};
+    var currentUser = {  "_id": "624f837b03c31299799e3dc9",  "firstName": "newUserPerson",  "lastName": "userUser",  "username": "newUser105",  "password": "$2b$12$nFe8xYP8NBm7yJXDpfSPGOaRQHFf7Uw6dpfBAe.S1kdrIh20RqNKy",  "roomies": [ "computer" ],  "preferences": [ "bowling" ]};
     
     useEffect(() => {
         Axios.get("http://localhost:3001/getUsers").then((response) => {
-            setListOfRoomies(response.data);
+            setListOfUsers(response.data);
         })
     }, []);
 
     const removeRoomie = () => {
-    /*    Axios.post("http://localhost:3001/removeRoomie", {
+        Axios.post("http://localhost:3001/removeRoomie", {
             _id,
-            name,
+            firstName,
+            lastName,
             username,
+            password,
             exRoomie,
             preferences,
             currRoomies
-        }).then((response) => {*/
+        }).then((response) => {
           alert("ROOMIE REMOVED");
-        //});
-       };  
+        });
+    };  
     
     return (
       <div className="Settings" style={{backgroundColor:'#F26666'}}>
@@ -50,27 +51,44 @@ function Settings() {
         <br></br>
 
         <CardGroup>
-            {listOfRoomies.map((roomie) => {
-                return (
-                    <div>
-                        <Card border="danger" class="rounded" style={{ width:'15rem', color: '#F2EFE4', backgroundColor:'#F28D8D'}}>
-                            <Card.Img src={girl} alt="girl"></Card.Img>
-                            <Card.Body  class="card text-center" style={{backgroundColor:'#F28D8D'}}>
-                                <Card.Title><br></br>{roomie.name}</Card.Title>
-                            </Card.Body>
-                            {/*preference listing needs to be formatted*/}
-                            <Button data-toggle="tooltip" data-placement="top" title={roomie.preferences} variant="outline-danger" onClick={(e1) => {
-                                setExRoomie(roomie.name);
-                                set_id(currentUser._id);
-                                setName(currentUser.name);
-                                setUsername(currentUser.username);
-                                setPreferences(currentUser.preferences);
-                                setCurrRoomies(currentUser.roomies);
-                                alert("ROOMIE SELECTED: " + roomie.name);
-                            }}>Select Roomie!</Button>
-                        </Card>
-                    </div>
-                );
+            {listOfUsers.map((user) => {
+                var formatPreferences = "";
+                for(var i = 0; i < user.preferences.length; i++){
+                    formatPreferences += user.preferences[i];
+                    if(i < user.preferences.length - 1){
+                        formatPreferences += ", ";
+                    }
+                }
+
+                for(var i = 0; currentUser.roomies.length; i++){
+                    if(user.username === currentUser.roomies[i]){
+                        return (
+                            <div>
+                                <Card border="danger" class="rounded" style={{ width:'15rem', color: '#F2EFE4', backgroundColor:'#F28D8D'}}>
+                                    <Card.Img src={girl} alt="girl"></Card.Img>
+                                    <Card.Body  class="card text-center" style={{backgroundColor:'#F28D8D'}}>
+                                        <Card.Title><br></br>{user.firstName}</Card.Title>
+                                    </Card.Body>
+                                    <Button data-toggle="tooltip" data-placement="top" title={formatPreferences} variant="outline-danger" onClick={(e1) => {
+                                        setExRoomie(user.username);
+                                        set_id(currentUser._id);
+                                        setFirstName(currentUser.firstName);
+                                        setUsername(currentUser.username);
+                                        setPreferences(currentUser.preferences);
+                                        setCurrRoomies(currentUser.roomies);
+                                        setLastName(currentUser.lastName);
+                                        setPassword(currentUser.password);
+                                        alert("ROOMIE SELECTED: " + user.name);
+                                    }}>Select Roomie!</Button>
+                                </Card>
+                            </div>
+                        );
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                
             })}
         </CardGroup>
         <br></br>

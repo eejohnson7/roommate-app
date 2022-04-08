@@ -3,44 +3,41 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card, CardGroup } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import Axios from "axios";
-
 import logo from './media/findRoomie.png';
 import girl from './media/girl.png';
-
 import './Settings';
 import './Preferences';
-// import './ChoreList';
 
 function RoommateFinder() {
   const [listOfUsers, setListOfUsers] = useState([]);
-  const[_id, set_id] = useState("");
-  const[firstName, setFirstName] = useState("");
-  const[username, setUsername] = useState("");
-  const[newRoomie, setNewRoomie] = useState([]);
-  const[matches, setMatches] = useState([]);
-  const[preferences, setPreferences] = useState([]);
-  const[currRoomies, setCurrRoomies] = useState([]);
+  const [_id, set_id] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [newRoomie, setNewRoomie] = useState([]);
+  const [preferences, setPreferences] = useState([]);
+  const [currRoomies, setCurrRoomies] = useState([]);
 
-  /*currently have it populating cards for all users, need to work on doing it for only currentUser's matches*/
+  var currentUser = {  "_id": "624f837b03c31299799e3dc9",  "firstName": "newUserPerson",  "lastName": "userUser",  "username": "newUser105",  "password": "$2b$12$nFe8xYP8NBm7yJXDpfSPGOaRQHFf7Uw6dpfBAe.S1kdrIh20RqNKy",  "roomies": [],  "preferences": [ "bowling"]};
+  var currUserPref = currentUser.preferences;
+
   useEffect(() => {
     Axios.get("http://localhost:3001/getUsers").then((response) => {
       setListOfUsers(response.data);
     })
   }, []);
 
-
-  /*need to test with actual currentUser, but it works with dummy data*/
-  var currentUser = {  "_id": "624cce80ce757e25629f9879",  "firstName": "Erin",  "username": "eejohnson",  "roomies": [],  "matches": [    "Pedro"  ],  "preferences": [    "hobbies",    "games"  ]};
-  var currUserPref = currentUser.preferences;
   
   const addRoomie = () => {
     Axios.post("http://localhost:3001/addRoomie", {
       _id,
       firstName,
+      lastName,
       username,
+      password,
       currRoomies,
       newRoomie,
-      matches,
       preferences
     }).then((response) => { 
       alert("ROOMIE ADDED: " + newRoomie); 
@@ -55,36 +52,49 @@ function RoommateFinder() {
 
       <CardGroup>
         {listOfUsers.map((user) => {
-          var score = 0;
-
-          for(var i = 0; i < currUserPref.length; i++){
-            if(currUserPref[i] === user.preferences[i]){
-              score++;
+          var formatPreferences = "";
+          for(var i = 0; i < user.preferences.length; i++){
+            formatPreferences += user.preferences[i];
+            if(i < user.preferences.length - 1){
+              formatPreferences += ", ";
             }
           }
-          return (
-            <div>
-            <Card border="danger" class="rounded" style={{ width:'15rem', color: '#F2EFE4', backgroundColor:'#F28D8D'}}>
-              <Card.Img src={girl} alt="girl"></Card.Img>
-              <Card.Body  class="card text-center" style={{backgroundColor:'#F28D8D'}}>
-                <Card.Title><br></br>{user.firstName}</Card.Title>
-                <Card.Text>Preference Score: {score}</Card.Text>
-              </Card.Body>
-              {/*preference listing needs to be formatted*/}
-              <Button data-toggle="tooltip" data-placement="top" title={user.preferences} variant="outline-danger" onClick={(e1) => {
-                setNewRoomie(user.firstName);
-                set_id(currentUser._id);
-                setFirstName(currentUser.firstName);
-                setUsername(currentUser.username);
-                setMatches(currentUser.matches);
-                setPreferences(currentUser.preferences);
-                setCurrRoomies(currentUser.roomies);
-                alert("ROOMIE SELECTED: " + user.firstName);
-                }}>Select Roomie!</Button>
-            </Card>
-          </div>
-        );
-      })}
+
+          if(user.username !== currentUser.username){
+            var score = 0;
+
+            for(var i = 0; i < currUserPref.length; i++){
+              if(currUserPref[i] === user.preferences[i]){
+               score++;
+              }
+            }
+            return (
+              <div>
+                <Card border="danger" class="rounded" style={{ width:'15rem', color: '#F2EFE4', backgroundColor:'#F28D8D'}}>
+                  <Card.Img src={girl} alt="girl"></Card.Img>
+                  <Card.Body  class="card text-center" style={{backgroundColor:'#F28D8D'}}>
+                    <Card.Title><br></br>{user.firstName}</Card.Title>
+                    <Card.Text>Preference Score: {score}</Card.Text>
+                  </Card.Body>
+                  <Button data-toggle="tooltip" data-placement="top" title={formatPreferences} variant="outline-danger" onClick={(e1) => {
+                    setNewRoomie(user.username);
+                    set_id(currentUser._id);
+                    setFirstName(currentUser.firstName);
+                    setUsername(currentUser.username);
+                    setPreferences(currentUser.preferences);
+                    setCurrRoomies(currentUser.roomies);
+                    setPassword(currentUser.password);
+                    setLastName(currentUser.lastName);
+                    alert("ROOMIE SELECTED: " + user.firstName);
+                    }}>Select Roomie!</Button>
+                </Card>
+              </div>
+            );
+          }
+          else{
+            return null;
+          }
+        })}
       </CardGroup>
       <br></br>
 

@@ -1,24 +1,19 @@
 import Axios from "axios";
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-
 import logo from './media/Roomie.png';
-
-import './RoommateFinder';
-import './Settings';
-// import './Chores/ChoreList';
 
 function Preferences () {
   const [preferences, setPreferences] = useState([]);
-  const[_id, set_id] = useState("");
-  const[firstName, setFirstName] = useState("");
-  const[username, setUsername] = useState("");
-  const[roomies, setRoomies] = useState([]);
-
-  /*need to test with actual currentUser, but it works with dummy data*/
-  var currentUser = {  "_id": "624cce80ce757e25629f9879",  "firstName": "Erin",  "username": "eejohnson",  "roomies": [],  "matches": [    "Pedro"  ],  "preferences": [    "hobbies",    "games"  ]};
+  const [_id, set_id] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [roomies, setRoomies] = useState([]);
+  
+  var currentUser = {  "_id": "624f837b03c31299799e3dc9",  "firstName": "newUserPerson",  "lastName": "userUser",  "username": "newUser105",  "password": "$2b$12$nFe8xYP8NBm7yJXDpfSPGOaRQHFf7Uw6dpfBAe.S1kdrIh20RqNKy",  "roomies": [],  "preferences": [ "bowling" ]};
   var questions = ["ifHouse", "ifApt", "ifPets", "ifDrinker", "ifSmoker", "ifPartier", "ifMornings", "ifNights"];
   var answers = [];
 
@@ -31,173 +26,169 @@ function Preferences () {
     setPreferences(answers);
     set_id(currentUser._id);
     setFirstName(currentUser.firstName);
+    setLastName(currentUser.lastName);
     setUsername(currentUser.username);
     setRoomies(currentUser.roomies);
+    setPassword(currentUser.password);
 
-    Axios.post("http://localhost:3001/setPreferences", {
+    Axios.post("http://localhost:3001/udpatePreferences", {
       _id,
       firstName,
+      lastName,
       username,
+      password,
       roomies,
       preferences
     }).then((response) => {
       alert("PREFERENCES UPDATED"); 
-      window.location = '/RoommateFinder'
-    })
-    .catch((err) => {
-      alert('Answer all questions')
-    })
-
-}
-
-  function onSubmit(event) {
-
-    }
+    }); 
+  }
 
   return(
     <div className="Preferences" style={{backgroundColor:'#F26666'}} >
       <img src={logo} alt="logo" height="75"></img>
       <p></p>
 
-      <div style={{ fontSize: "25px", color: "#F2EFE4"}}>
-        <h4 className="fw-bold text-center mt-3"> </h4>
-        <form style={{color:"#F2EFE4"}}>
-          <p className="fw-bold">Are you looking to rent a house?</p>
+      <div style={{ color: "#F2EFE4",  fontSize: "25px"}}>
+        <h4 class="fw-bold text-center mt-3"> </h4>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifHouse" id="house"/>
-            <label htmlFor="house">
+        <form >
+          <p class="fw-bold">Are you looking to rent a house?</p>
+
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifHouse" id="house"/>
+            <label for="house">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifHouse" id="notHouse" />
-            <label htmlFor="notHouse">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifHouse" id="notHouse" />
+            <label for="notHouse">
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Are you looking to rent an apartment?</p>
+          <p class="fw-bold">Are you looking to rent an apartment?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifApt" id="apt" />
-            <label htmlFor="apt">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifApt" id="apt" />
+            <label for="apt">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifApt" id="notApt" />
-            <label htmlFor="notApt">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifApt" id="notApt" />
+            <label for="notApt">
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Are you okay with pets?</p>
+          <p class="fw-bold">Are you okay with pets?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifPets" id="pets" />
-            <label htmlFor="pets">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifPets" id="pets" />
+            <label for="pets">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifPets" id="pets" />
-            <label htmlFor="noPets">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifPets" id="pets" />
+            <label for="noPets">
               No
             </label>
           </div>
         </form>
   
         <form >
-          <p className="fw-bold">Do you drink?</p>
+          <p class="fw-bold">Do you drink?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifDrinker" id="drinker" />
-            <label htmlFor="drinker">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifDrinker" id="drinker" />
+            <label for="drinker">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifDrinker" id="nonDrinker" />
-            <label htmlFor="nonDrinker">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifDrinker" id="nonDrinker" />
+            <label for="nonDrinker">
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Do you smoke?</p>
+          <p class="fw-bold">Do you smoke?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifSmoker" id="smoker" />
-            <label htmlFor="smoker">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifSmoker" id="smoker" />
+            <label for="smoker">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifSmoker" id="nonSmoker" />
-            <label htmlFor="nonSmoker">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifSmoker" id="nonSmoker" />
+            <label for="nonSmoker">
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Are you okay with having people over?</p>
+          <p class="fw-bold">Are you okay with having people over?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifPartier" id="partier" />
-            <label htmlFor="partier">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifPartier" id="partier" />
+            <label for="partier">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifPartier" id="nonPartier" />
-            <label htmlFor="nonPartier">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifPartier" id="nonPartier" />
+            <label for="nonPartier">
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Are you a morning person?</p>
+          <p class="fw-bold">Are you a morning person?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifMornings" id="mornings" />
-            <label htmlFor="mornings">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifMornings" id="mornings" />
+            <label for="mornings">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
+          <div class="form-check mb-2">
             <label> 
-              <input className="form-check-input" type="radio" name="ifMornings" id="nonMornings" />
+              <input class="form-check-input" type="radio" name="ifMornings" id="nonMornings" />
               No
             </label>
           </div>
         </form>
 
         <form >
-          <p className="fw-bold">Are you a night owl?</p>
+          <p class="fw-bold">Are you a night owl?</p>
 
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifNights" id="nights" />
-            <label htmlFor="mornings">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifNights" id="nights" />
+            <label for="mornings">
               Yes
             </label>
           </div>
-          <div className="form-check mb-2">
-            <input className="form-check-input" type="radio" name="ifNights" id="nonNights" />
-            <label htmlFor="nonNights">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="ifNights" id="nonNights" />
+            <label for="nonNights">
               No
             </label>
           </div>
 
-          <div className="col-md-12 text-center">
-            <Button className="rounded" variant="danger" onClick={updatePreferences}>Update Preferences</Button>
+          <div class="col-md-12 text-center">
+            <Button class="rounded" variant="danger" onClick={updatePreferences}>Update Preferences</Button>
           </div>
         </form>
         <br></br>
@@ -206,6 +197,7 @@ function Preferences () {
       <div>
         <Button style={{borderRadius: '12px', position: 'absolute', right: 5, top: 5}} variant="danger" onClick={(e2) => {
           e2.preventDefault();
+          window.location.href='/Chores';
         }}>Open Chore List</Button>
       </div>
 
@@ -219,7 +211,7 @@ function Preferences () {
       <div>
         <Button style={{borderRadius: '12px', position: 'absolute', right: 5, top: 95}} variant="danger" onClick={(e2) => {
           e2.preventDefault();
-          window.location.href='/Preferences';
+          window.location.href='/RoommateFinder';
         }}>Find Roomies!</Button>
       </div>
 

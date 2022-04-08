@@ -71,13 +71,12 @@ class RegistrationPage extends Component {
         <img src={logo} className="logos" alt="logo" />
         <div>
         <form className='registration' onSubmit={this.onSubmit} >
-            <label>first name: 
+            <label>first name: </label>
             <input className='registration-input' 
             onChange={this.changeFirstName} 
             value={this.state.firstName}
             type="text" 
             />
-            </label>
             <br />
             <br />
 
